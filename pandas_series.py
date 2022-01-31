@@ -104,8 +104,11 @@ num_float.value_counts(bins=4)
 pd.cut(num_float, 4).value_counts().sort_index()
 # 8. Plot the binned data in a meaningful way. Be sure to include a title and axis labels.
 # Need to finish this graph
-num_float.value_counts(bins=4).plot.bar()
-plt.title('')
+num_float.value_counts(bins=4).sort_index(ascending = False).plot(kind= 'barh')
+plt.title('Numbers in 4 bins')
+plt.xlabel('Count')
+plt.ylabel('$')
+plt.show()
 
 exam_scores = [60, 86, 75, 62, 93, 71, 60, 83, 95, 78, 65, 72, 69, 81, 96, 80, 85, 92, 82, 78]
 exam_scores = pd.Series(exam_scores)
@@ -114,11 +117,27 @@ exam_scores = pd.Series(exam_scores)
 exam_scores.size
 # There are 20 elements
 # 2. Run the code to discover the minimum, the maximum, the mean, and the median scores for the exam_scores Series.
-
+exam_scores.describe()
+exam_scores.median() # 50% from above
 # 3. Plot the Series in a meaningful way and make sure your chart has a title and axis labels.
-
+exam_scores.plot.hist()
+plt.title('Exam Scores')
+plt.xlabel('Score')
+plt.ylabel('Frequency')
+plt.show()
 # 4. Write the code necessary to implement a curve for your exam_grades Series and save this as curved_grades. Add the necessary points to the highest grade to make it 100, and add the same number of points to every other score in the Series as well.
-
+curve = 100 - exam_scores.max()
+curved_grades = exam_scores + curve
 # 5. Use a method to convert each of the numeric values in the curved_grades Series into a categorical value of letter grades. For example, 86 should be a 'B' and 95 should be an 'A'. Save this as a Series named letter_grades.
-
+bin_edges = [0, 70, 75, 80, 90, 101]
+bin_labels = ['F', 'D', 'C', 'B', 'A']
+letter_grades = pd.cut(curved_grades, bins=bin_edges, labels=bin_labels)
+letter_grades
 # 6. Plot your new categorical letter_grades Series in a meaninful way and include a title and axis labels.
+letter_grades.value_counts().sort_index().plot.barh()
+plt.title('(Curved) Letter Grades')
+plt.xlabel('Number of Students')
+plt.ylabel('Grade')
+plt.show()
+
+

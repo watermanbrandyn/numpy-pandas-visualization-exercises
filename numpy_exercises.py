@@ -11,6 +11,7 @@ len(a[a > 0])
 #3. How many even positive numbers are there?
 b= a[a % 2 == 0]
 len(b[b > 0])
+# Can use & (and) | (or) as well inside of the [] for comparisons
 # There are three elements that satisfy those conditions.
 
 #4. If you were to add 3 to each data point, how many positive numbers would there be?

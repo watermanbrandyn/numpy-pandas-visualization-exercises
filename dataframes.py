@@ -27,12 +27,13 @@ df.sort_values(by= ['english', 'name'])
 df.sort_values(by='english').sort_values(by='passing_english')
 # E. Calculate each students overall grade and add it as a column on the dataframe. The overall grade is the average of the math, english, and reading grades.
 df['overall_grade'] = (df.math + df.english + df.reading)/3
-df
+df['overall_grade'] = round(df.loc[:, 'math': 'reading'].mean(axis=1))
 
 mpg = data('mpg')
 data('mpg', show_doc=True)
 mpg
 # 1. How many rows and columns are there?
+mpg.shape
 # There are 234 rows and 11 columns
 # 2. What are the data types of each column?
 mpg.dtypes
@@ -50,12 +51,15 @@ mpg[mpg.city > mpg.highway]
 mpg['mileage_difference'] = mpg.highway - mpg.city
 # 8. Which car (or cars) has the highest mileage difference?
 mpg.sort_values(by='mileage_difference', ascending=False)
+mpg.nlargest(1, 'mileage_difference', keep='all')
 # Honda Civic and Volkswagen New Beetle
 # 9. Which compact class car has the lowest highway mileage? The best?
 mpg[mpg['class'] == 'compact'].sort_values(by='highway')
+# can use .head(1) or .tail(1) to specify highest/lowest
 # Lowest: Volkswagen Jetta, Best: Volkswagen Jetta (4 cyl manual)
 # 10. Create a column named average_mileage that is the mean of the city and highway mileage.
 mpg['average_mileage'] = (mpg.highway + mpg.city) / 2
+mpg[['city', 'highway']].mean(axis=1)
 # 11. Which dodge car has the best average mileage? The worst?
 mpg[mpg.manufacturer == 'dodge'].sort_values(by='average_mileage')
 # Best: caravan 2wd
